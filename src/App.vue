@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <form id="login-form" v-if="!userId" @submit="submitLogin">
+    <div id="login-form" v-if="!userId" @submit="submitLogin">
       <p>
         <label for="login">Login</label>
         <br>
@@ -24,20 +24,22 @@
         >
       </p>
       <p>
-        <input 
+        <v-btn 
           class="button"
-          type="submit"
-          value="Enviar"
-        >
+          @click="submitLogin"
+        >Enviar</v-btn>
       </p>
-    </form>
+    </div>
     <div id="nav" v-if="userId">
       <router-link to="/">Home</router-link> 
       <router-link to="/perfil">Perfil</router-link>
       <router-link to="/amigos">Amigos</router-link>
       <router-link to="/comunidades">Comunidades</router-link>
+      <a href="/" @click="logout">Logout</a>
     </div>
-    <router-view v-if="userId"/>
+    <div id="body" v-if="userId">
+      <router-view/>
+    </div>
   </div>
 </template>
 
@@ -55,7 +57,21 @@ export default {
   }),
   methods: {
     submitLogin() {
-      this.userId = 1;
+      this.$http.post("http://localhost:3000/login",{login: this.login, password: this.password}).then( 
+        success => {
+          if (!success.body) {
+            console.log("Senha ou login está incorreto.")
+          } else {
+            console.log(success.body)
+            this.userId = success.body.id
+          }
+        }, failure => {console.log("Falha ao contato do backend")}
+      )
+    },
+    logout() {
+      this.userId = null
+      this.login = ""
+      this.password = ""
     }
   }
 }
@@ -67,8 +83,8 @@ html, body {
   width: 100%;
 }
 body {
-  margin: 0;
-  background-image: radial-gradient(teal,mediumseagreen);
+  margin: 0; 
+  background-color:#B1EdE8;
 }
 #app {
   display: flex;
@@ -78,30 +94,29 @@ body {
 }
 
 #nav {
-  padding: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
   text-align: center;
 }
 
 #nav a {
   display: block; /*Mostrar na vertical*/
   font-weight: bold;
-  color: white; /* Green */
-  background-color: mediumseagreen;
-  border: 1px solid black;
-  border-radius: 15px;
-  margin: 10px;
+  color: black; /* Green */
+  background-color: #92DCE5;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
   font-size: 16px;
+  box-shadow: 0px 0px 3px 0px black;
 }
 
 #nav a:hover {
-  background-color: aquamarine;
+  background-color: #C9ECEF;
 }
 
 #nav a.router-link-exact-active {
-  background-color:aqua;
+  background-color:#FFFCF9;
   color: black;
 }
 
@@ -110,7 +125,6 @@ body {
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
-  /* padding: 42px 55px 45px 55px; */
   padding-top: 5%;
   padding-bottom: 5%;
   margin-right: 40%;
@@ -137,8 +151,9 @@ label {
 }
 
 .field:focus {
-  border-bottom: 2px solid blue;
+  border-bottom: 2px solid #FF6978;
 }
+
 
 .button {
   font-size: 16px;
@@ -148,8 +163,8 @@ label {
   justify-content: center;
   align-items: center;
   padding: 10px 20px;
-  border-radius: 27px;
-  background:#333333;
+  border-radius: 10px;
+  background: #000000;
   position: relative;
   margin-left: 30%;
   margin-right: 30%;
@@ -157,7 +172,13 @@ label {
 }
 
 .button:hover {
-  background: gray;
+  background: #222222;
 }
 
+#body {
+  height: 95%;
+  width: 83.5%;
+  border-radius: 10px;
+  background-color: #FFFCF9;
+}
 </style>
