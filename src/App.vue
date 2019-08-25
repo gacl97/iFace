@@ -181,7 +181,5 @@ button:hover {
 #body {
   height: 95%;
   width: 83.5%;
-  border-radius: 10px;
-  background-color: #FFFCF9;
 }
 </style>

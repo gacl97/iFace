@@ -1,14 +1,14 @@
 <template>
   <div class="profile">
     <img class="profile-pic" alt="Profile Pic" src="../assets/profilepic.png">
-    <div class="container" v-if="profile && !editing">
+    <div v-if="profile && !editing">
         <p><b>Nome: </b>{{profile.name}}</p> 
         <p><b>Idade: </b>{{profile.age}}</p> 
         <p><b>Telefone: </b>{{profile.phone}}</p> 
         <p><b>Status: </b>{{profile.status}}</p> 
         <v-btn class="button" @click="editing=true">Editar</v-btn>
     </div>
-    <div class="container" v-if="profile && editing">
+    <div v-if="profile && editing">
         <p><b>Nome: </b><input :placeholder="profile.name" v-on:input="updatedProfile.name = $event.target.value"></p> 
         <p><b>Idade: </b><input :placeholder="profile.age" v-on:input="updatedProfile.age = $event.target.value"></p> 
         <p><b>Telefone: </b><input :placeholder="profile.phone" v-on:input="updatedProfile.phone = $event.target.value"></p> 
@@ -40,7 +40,6 @@ export default {
     getProfile() {
       this.$http.get("http://localhost:3000/users/" + this.$globals.userId).then(
         success => {
-          console.log(success)
           this.profile = success.body
         }, failure => {
           console.log(failure)
@@ -54,22 +53,25 @@ export default {
           delete this.updatedProfile[key]
         }
       })
-      this.$http.put("http://localhost:3000/users/" + this.$globals.userId, this.updatedProfile).then(
-        success => {
-        console.log(success)
+      if (Object.keys(this.updatedProfile).length) {
+        this.$http.put("http://localhost:3000/users/" + this.$globals.userId, this.updatedProfile).then(
+          success => {
+            this.editing = false
+            this.updatedProfile = {
+              name: null,
+              age: null,
+              phone: null,
+              status: null,
+            },
+            this.profile = success.body
+          }, failure => {
+            console.log(failure)
+            alert("Falha ao contato do backend")
+          }
+        )
+      } else {
         this.editing = false
-        this.updatedProfile = {
-          name: null,
-          age: null,
-          phone: null,
-          status: null,
-        },
-        this.profile = success.body
-        }, failure => {
-        console.log(failure)
-        alert("Falha ao contato do backend")
-        }
-      )
+      }
     }
   },
   mounted() {
@@ -85,6 +87,7 @@ export default {
     justify-content: center;
     align-items: center;
     height: 100%;
+    width: 100%;
 }
 .profile-pic {
     height: 200px;
