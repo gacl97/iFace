@@ -13,6 +13,13 @@ Vue.use (Vuetify)
 
 Vue.use(VueResource)
 
+const global = new Vue({
+  data: {
+    userId: null
+  }
+})
+Vue.prototype.$globals = global
+
 new Vue({
   router,
   store,

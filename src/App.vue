@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="login-form" v-if="!userId" @submit="submitLogin">
+    <div id="login-form" v-if="!this.$globals.userId" @submit="submitLogin">
       <p>
         <label for="login">Login</label>
         <br>
@@ -30,14 +30,14 @@
         >Enviar</v-btn>
       </p>
     </div>
-    <div id="nav" v-if="userId">
+    <div id="nav" v-if="this.$globals.userId">
       <router-link to="/">Home</router-link> 
       <router-link to="/perfil">Perfil</router-link>
       <router-link to="/amigos">Amigos</router-link>
       <router-link to="/comunidades">Comunidades</router-link>
       <a href="/" @click="logout">Logout</a>
     </div>
-    <div id="body" v-if="userId">
+    <div id="body" v-if="this.$globals.userId">
       <router-view/>
     </div>
   </div>
@@ -46,12 +46,12 @@
 <script>
 
 export default {
+  
   name: 'app',
   components: {
 
   },
   data: () => ({
-    userId: null,
     login: "",
     password: ""
   }),
@@ -63,13 +63,16 @@ export default {
             console.log("Senha ou login está incorreto.")
           } else {
             console.log(success.body)
-            this.userId = success.body.id
+            this.$globals.userId = success.body.id
           }
-        }, failure => {console.log("Falha ao contato do backend")}
+        }, failure => {
+          console.log(failure)
+          alert("Falha ao contato do backend")
+        }
       )
     },
     logout() {
-      this.userId = null
+      this.$globals.userId = null
       this.login = ""
       this.password = ""
     }
@@ -155,7 +158,7 @@ label {
 }
 
 
-.button {
+button {
   font-size: 16px;
   color: #fff;
   line-height: 1.2;
@@ -171,7 +174,7 @@ label {
   transition: all 0.3s;
 }
 
-.button:hover {
+button:hover {
   background: #222222;
 }
 
