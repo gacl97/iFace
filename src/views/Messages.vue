@@ -25,7 +25,7 @@ export default {
   methods: {
     getMessages() {
       
-      this.$http.get("http://localhost:3000/users/" + this.$store.state.userId + "/messages").then(
+      this.$http.get(process.env.VUE_APP_API + "users/" + this.$store.state.userId + "/messages").then(
         success => {
           console.log(success.body.messages)
           this.messages = success.body.messages.filter((value) => value.sender_id === this.friendId || value.receiver_id === this.friendId)

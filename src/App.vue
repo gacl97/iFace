@@ -67,7 +67,7 @@ export default {
       })
     },
     submitLogin() {
-      this.$http.post("http://localhost:3000/login",{login: this.login, password: this.password}).then( 
+      this.$http.post(process.env.VUE_APP_API + "login",{login: this.login, password: this.password}).then( 
         success => {
           if (!success.body) {
             console.log("Senha ou login está incorreto.")

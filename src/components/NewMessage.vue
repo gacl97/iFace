@@ -34,7 +34,7 @@ export default {
   methods: {
 
     send() {
-      this.$http.post("http://localhost:3000/users/" + this.$store.state.userId + "/messages", this.message).then(
+      this.$http.post(process.env.VUE_APP_API + "users/" + this.$store.state.userId + "/messages", this.message).then(
         success => {
           console.log(success.body)
           

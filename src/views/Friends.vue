@@ -29,7 +29,7 @@ export default {
       })
     },
     getFriends() {
-      this.$http.get("http://localhost:3000/users/" + this.$store.state.userId + "/friends").then(
+      this.$http.get(process.env.VUE_APP_API + "users/" + this.$store.state.userId + "/friends").then(
         success => {
           this.friends = success.body
         }, failure => {

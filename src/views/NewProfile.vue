@@ -33,7 +33,7 @@ export default {
     
     createProfile() {
 
-      this.$http.post("http://localhost:3000/users/", this.updatedProfile).then(
+      this.$http.post(process.env.VUE_APP_API + "users/", this.updatedProfile).then(
         () => {
           this.$router.push({
             name: 'home'

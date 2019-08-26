@@ -41,7 +41,7 @@ export default {
       
       console.log((result.users.map((user) => user.id) + "," + this.$store.state.userId).split(","))
       if (confirm("Entrar na comunidade "+result.name+"?")) {
-        this.$http.put("http://localhost:3000/communities/" + result.id, {
+        this.$http.put(process.env.VUE_APP_API + "communities/" + result.id, {
           community: {
             user_ids: (result.users.map((user) => user.id) + "," + this.$store.state.userId).split(",")
           }
@@ -59,7 +59,7 @@ export default {
     },
     search(input){
       return new Promise(resolve => {
-        const url = "http://localhost:3000/communities/"
+        const url = process.env.VUE_APP_API + "communities/"
 
         fetch(url)
           .then(response => response.json())
@@ -69,7 +69,7 @@ export default {
       })
     },
     getCommunities() {
-      this.$http.get("http://localhost:3000/users/" + this.$store.state.userId + "/communities").then(
+      this.$http.get(process.env.VUE_APP_API + "users/" + this.$store.state.userId + "/communities").then(
         success => {
           console.log(success)
           this.ownedCommunities = success.body.owner

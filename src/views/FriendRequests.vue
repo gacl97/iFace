@@ -40,7 +40,7 @@ export default {
     accept(request) {
       
       if (confirm("Aceitar pedido?")) {
-        this.$http.put("http://localhost:3000/users/" + this.$store.state.userId + "/friend_requests/" + request.id, {},
+        this.$http.put(process.env.VUE_APP_API + "users/" + this.$store.state.userId + "/friend_requests/" + request.id, {},
         () => {
         }, failure => {
           console.log(failure)
@@ -50,7 +50,7 @@ export default {
     },
     handleSubmit(result) {
       if (confirm("adicionar "+result.name+" como amigo?")) {
-        this.$http.post("http://localhost:3000/users/" + this.$store.state.userId + "/friend_requests/", {
+        this.$http.post(process.env.VUE_APP_API + "users/" + this.$store.state.userId + "/friend_requests/", {
           friend_id: result.id 
         },
         () => {
@@ -66,7 +66,7 @@ export default {
     },
     search(input){
       return new Promise(resolve => {
-        const url = "http://localhost:3000/users/"
+        const url = process.env.VUE_APP_API + "users/"
 
         fetch(url)
           .then(response => response.json())
@@ -76,7 +76,7 @@ export default {
       })
     },
     getFriends() {
-      this.$http.get("http://localhost:3000/users/" + this.$store.state.userId + "/friend_requests").then(
+      this.$http.get(process.env.VUE_APP_API + "users/" + this.$store.state.userId + "/friend_requests").then(
         success => {
           console.log(success.body)
           this.sent = success.body.incoming
@@ -93,7 +93,7 @@ export default {
   },
   watch: {
     getFriends() {
-      this.$http.get("http://localhost:3000/users/" + this.$store.state.userId + "/friend_requests").then(
+      this.$http.get(process.env.VUE_APP_API + "users/" + this.$store.state.userId + "/friend_requests").then(
         success => {
           console.log(success.body)
           this.sent = success.body.incoming

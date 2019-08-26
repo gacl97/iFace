@@ -42,7 +42,7 @@ export default {
   }),
   methods: {
     getProfile() {
-      this.$http.get("http://localhost:3000/users/" + this.$store.state.userId).then(
+      this.$http.get(process.env.VUE_APP_API + "users/" + this.$store.state.userId).then(
         success => {
           this.profile = success.body
         }, failure => {
@@ -58,7 +58,7 @@ export default {
         }
       })
       if (Object.keys(this.updatedProfile).length) {
-        this.$http.put("http://localhost:3000/users/" + this.$store.state.userId, this.updatedProfile).then(
+        this.$http.put(process.env.VUE_APP_API + "users/" + this.$store.state.userId, this.updatedProfile).then(
           success => {
             this.editing = false
             this.updatedProfile = {
