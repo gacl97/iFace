@@ -1,4 +1,14 @@
-# iface_front
+# iFace Front
+
+### Projeto:
+
+-É possível criar uma conta;</br>
+-Fazer login;</br>
+-Editar o perfil;</br>
+-Adicionar amigos;</br>
+-Criar uma comunidade e ser membro de uma comunidade;</br>
+-Para editar os dados da comunidade, basta clicar sobre ela;</br>
+-Para ver as mensagens de algum amigo, se possuir, basta clicar sobre ele;</br>
 
 ## Project setup
 ```
@@ -27,13 +37,3 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-
-### Projeto:
-
--É possível criar uma conta;</br>
--Fazer login;</br>
--Editar o perfil;</br>
--Adicionar amigos;</br>
--Criar uma comunidade e ser membro de uma comunidade;</br>
--Para editar os dados da comunidade, basta clicar sobre ela;</br>
--Para ver as mensagens de algum amigo, se possuir, basta clicar sobre ele;</br>
