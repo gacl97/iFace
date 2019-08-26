@@ -30,7 +30,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Projeto:
 
--É possível criar uma conta;
+-É possível criar uma conta;</br>
 -Fazer login;
 -Editar o perfil;
 -Adicionar amigos;
