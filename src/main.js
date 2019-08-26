@@ -8,6 +8,7 @@ import VueResource from 'vue-resource'
 import Autocomplete from '@trevoreyre/autocomplete-vue'
 import '@trevoreyre/autocomplete-vue/dist/style.css'
 
+Vue.config.devtools = false
 Vue.config.productionTip = false
 
 Vue.use(Autocomplete)
