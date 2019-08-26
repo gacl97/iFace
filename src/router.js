@@ -5,6 +5,9 @@ import Friends from './views/Friends.vue'
 import Profile from './views/Profile.vue'
 import Communities from './views/Communities.vue'
 import NewCommunity from './views/NewCommunity.vue'
+import FriendRequests from './views/FriendRequests.vue'
+import NewProfile from './views/NewProfile.vue'
+import Messages from './views/Messages.vue'
 
 Vue.use(Router)
 
@@ -39,6 +42,21 @@ export default new Router({
       path: '/comunidades',
       name: 'comunidades',
       component: Communities
+    },
+    {
+      path: '/amigos/pedidos',
+      name: 'pedidos',
+      component: FriendRequests
+    },
+    {
+      path: '/perfil/criar',
+      name: 'criar-perfil',
+      component: NewProfile
+    },
+    {
+      path: '/amigos/:id',
+      name: 'mensagens',
+      component: Messages
     }
   ]
 })

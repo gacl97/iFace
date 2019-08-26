@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="login-form" v-if="!this.$globals.userId" @submit="submitLogin">
+    <div id="login-form" v-if="!this.$store.state.userId && this.$route.name != 'criar-perfil'" @submit="submitLogin">
       <p>
         <label for="login">Login</label>
         <br>
@@ -28,16 +28,20 @@
           class="button"
           @click="submitLogin"
         >Enviar</v-btn>
+        <v-btn 
+          class="button"
+          @click="createAcc"
+        >Criar perfil</v-btn>
       </p>
     </div>
-    <div id="nav" v-if="this.$globals.userId">
-      <router-link to="/">Home</router-link> 
+    <div id="nav" v-if="this.$store.state.userId">
       <router-link to="/perfil">Perfil</router-link>
       <router-link to="/amigos">Amigos</router-link>
+      <router-link to="/amigos/pedidos">Pedidos de amizade</router-link>
       <router-link to="/comunidades">Comunidades</router-link>
       <a href="/" @click="logout">Logout</a>
     </div>
-    <div id="body" v-if="this.$globals.userId">
+    <div id="body" v-if="this.$store.state.userId || this.$route.name === 'criar-perfil'">
       <router-view/>
     </div>
   </div>
@@ -56,6 +60,12 @@ export default {
     password: ""
   }),
   methods: {
+    createAcc() {
+      console.log(this.$route.name === "criar-perfil")
+      this.$router.push({
+        name: 'criar-perfil'
+      })
+    },
     submitLogin() {
       this.$http.post("http://localhost:3000/login",{login: this.login, password: this.password}).then( 
         success => {
@@ -63,7 +73,10 @@ export default {
             console.log("Senha ou login está incorreto.")
           } else {
             console.log(success.body)
-            this.$globals.userId = success.body.id
+            this.$store.state.userId = success.body.id
+            this.$router.push({
+              name: 'perfil'
+            })
           }
         }, failure => {
           console.log(failure)
@@ -72,7 +85,7 @@ export default {
       )
     },
     logout() {
-      this.$globals.userId = null
+      this.$store.state.userId = null
       this.login = ""
       this.password = ""
     }

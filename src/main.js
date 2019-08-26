@@ -3,8 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './registerServiceWorker'
-import Vuetify from 'vuetify'
-import colors from 'vuetify/es5/util/colors'
+import Vuetify,{VButton,VAutocomplete} from 'vuetify'
 import VueResource from 'vue-resource'
 import Autocomplete from '@trevoreyre/autocomplete-vue'
 import '@trevoreyre/autocomplete-vue/dist/style.css'
@@ -15,12 +14,12 @@ Vue.use(Autocomplete)
 Vue.use (Vuetify)
 Vue.use(VueResource)
 
-const global = new Vue({
-  data: {
-    userId: null
-  }
+Vue.use(Vuetify, {
+  components: {
+    VButton,
+    VAutocomplete
+  },
 })
-Vue.prototype.$globals = global
 
 new Vue({
   router,

@@ -1,6 +1,13 @@
 <template>
   <div class="communities">
-    <h3 v-if="ownedCommunities.length">Dono</h3>
+    <autocomplete
+      :search="search"
+      placeholder="Buscar comunidade"
+      aria-label="Buscar comunidade"
+      :get-result-value="getResultValue"
+      @submit="handleSubmit"
+    ></autocomplete>
+    <h3 >Dono</h3>
     <div class="owned-communities">
       <community :community="community" v-for="community in ownedCommunities" :key="community.id"/>
       <community :community="{name: 'Adicionar comunidade', content: ''}" :isNew='true'/> 
@@ -14,19 +21,55 @@
 
 <script>
 // @ is an alias to /src
-import Community from "../components/Community.vue" 
+import Community from "../components/Community.vue"
+import Autocomplete from '@trevoreyre/autocomplete-vue' 
 export default {
   name: 'communities',
   components: {
-    Community
+    Community,
+    Autocomplete
   },
   data: () => ({
-    ownedCommunities: null,
-    memberCommunities: null
+    ownedCommunities: [],
+    memberCommunities: [],
+    communitySearch: [],
+    searchResult: null,
+    loading: false
   }),
   methods: {
+    handleSubmit(result) {
+      
+      console.log((result.users.map((user) => user.id) + "," + this.$store.state.userId).split(","))
+      if (confirm("Entrar na comunidade "+result.name+"?")) {
+        this.$http.put("http://localhost:3000/communities/" + result.id, {
+          community: {
+            user_ids: (result.users.map((user) => user.id) + "," + this.$store.state.userId).split(",")
+          }
+        },
+        () => {
+
+        }, failure => {
+          console.log(failure)
+          alert("Falha ao contato do backend")
+        })
+      }
+    },
+    getResultValue(result) {
+      return result.name
+    },
+    search(input){
+      return new Promise(resolve => {
+        const url = "http://localhost:3000/communities/"
+
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            resolve(data.filter((value) => value.id != this.$store.state.userId && value.name.toLowerCase().startsWith(input.toLowerCase())))
+          })
+      })
+    },
     getCommunities() {
-      this.$http.get("http://localhost:3000/users/" + this.$globals.userId + "/communities").then(
+      this.$http.get("http://localhost:3000/users/" + this.$store.state.userId + "/communities").then(
         success => {
           console.log(success)
           this.ownedCommunities = success.body.owner

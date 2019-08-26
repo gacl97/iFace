@@ -43,7 +43,7 @@ export default {
       )
     },
     createCommunity() {
-      this.$http.post("http://localhost:3000/users/"+this.$globals.userId+"/communities/", this.updatedCommunity).then(
+      this.$http.post("http://localhost:3000/users/"+this.$store.state.userId+"/communities/", this.updatedCommunity).then(
         success => {
           this.$router.push({
             name: 'comunidades'
@@ -61,7 +61,7 @@ export default {
         }
       })
       if (Object.keys(this.updatedCommunity).length) {
-        this.$http.put("http://localhost:3000/users/" + this.$globals.userId + "/communities/" + this.$route.params.id, this.updatedCommunity).then(
+        this.$http.put("http://localhost:3000/users/" + this.$store.state.userId + "/communities/" + this.$route.params.id, this.updatedCommunity).then(
           success => {
             this.$router.push({
               name: 'comunidades'

@@ -18,8 +18,8 @@ export default {
   },
   props: {
     friend: {
-        type: Object, 
-        required: true
+      type: Object, 
+      required: true
     }
   }
 }

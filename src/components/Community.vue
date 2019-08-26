@@ -24,11 +24,11 @@ export default {
       })
     },
     updateCommunity() {
-      if (this.community.owner_id === this.$globals.userId) {
+      if (this.community.owner_id === this.$store.state.userId) {
         this.$router.push({
           name: 'editar-comunidade',
           params: {
-              id: this.community.id
+            id: this.community.id
           }
         })
       }
