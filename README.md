@@ -31,9 +31,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ### Projeto:
 
 -É possível criar uma conta;</br>
--Fazer login;
--Editar o perfil;
--Adicionar amigos;
--Criar uma comunidade e ser membro de uma comunidade;
--Para editar os dados da comunidade, basta clicar sobre ela;
--Para ver as mensagens de algum amigo, se possuir, basta clicar sobre ele;
+-Fazer login;</br>
+-Editar o perfil;</br>
+-Adicionar amigos;</br>
+-Criar uma comunidade e ser membro de uma comunidade;</br>
+-Para editar os dados da comunidade, basta clicar sobre ela;</br>
+-Para ver as mensagens de algum amigo, se possuir, basta clicar sobre ele;</br>
